@@ -1,8 +1,8 @@
 import pandas as pd
 
+
 class Students:
     def __init__(self):
-
 
         self.df_under_grd = pd.read_csv('und_grd.csv', index_col=False)
         self.df_post_grd = pd.read_csv('post_grd.csv', index_col=False)
@@ -93,15 +93,11 @@ class Students:
         self.std_id = std_id
         self.df = pd.concat([self.df_under_grd, self.df_post_grd], keys=['UnderGraduate', 'PostGraduate'])
         # if self.df_under_grd[self.df_under_grd['Student ID'] ==  self.std_id]:
-        name = self.df['Full Name'][self.df['Student ID'] == self.std_id]
+        name = self.df['Full Name'][self.df['Student ID'] == self.std_id][0][0]
+        
         self.df = self.df_under_grd.drop(self.df_under_grd[self.df_under_grd == self.std_id].index)
         print(f'{name} is succesfully removed! ')
-        if df_post_grd[df_post_grd['Student ID']== self.std_id]:
-            name = df_post_grd['Full Name'][df_post_grd['Student ID'] == self.std_id]
-            df_post_grd = df_post_grd.drop(df_post_grd[df_post_grd == self.std_id].index)
-            print(f'{name} is succesfully removed! ')
-        else:
-            print('Please enter valid Student ID')
+
     
     def find(self, std_id):
         self.df = pd.concat([self.df_under_grd, self.df_post_grd], keys=['UnderGraduate', 'PostGraduate'])
@@ -109,22 +105,17 @@ class Students:
         self.std_id = std_id
         print(self.df)
         return self.df.loc[self.df['Student ID'] == self.std_id]
-        # df_under_grd.loc[df_under_grd['Student ID'] == 'c'] 
-        # if self.df_under_grd[self.df_under_grd['Student ID']==self.std_id]:
-        #     return self.df_under_grd[self.std_id]
-        # elif self.df_post_grd[self.df_post_grd['Student ID']==self.std_id]:
-        #     return self.df_post_grd[self.std_id]
-        # else:
-        #     print('this ID is Not Found!')
     
     @property
     def display_all(self):
         # return self.df
-        print(f'Undergraduate students: \n {self.df_under_grd}')
-        print(f'Postgraduate students: \n {self.df_post_grd}')
+        self.df = pd.concat([self.df_under_grd, self.df_post_grd], keys=['UnderGraduate', 'PostGraduate'])
+        # print(f'Undergraduate students: \n {self.df_under_grd}')
+        # print(f'Postgraduate students: \n {self.df_post_grd}')
+        return self.df
 
 stud = Students()
 # stud.add
-stud.display_all
-# stud.remove(std_id='q')
-# print(stud.find(std_id='q'))
+# print(stud.display_all)
+stud.remove(std_id='w')
+# print(stud.find(std_id='w'))
